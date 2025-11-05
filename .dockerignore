@@ -1,0 +1,13 @@
+.git
+.idea
+.DS_Store
+Thumbs.db
+
+# Spring
+spring/.gradle/
+spring/build/
+
+# Python
+fastapi-app/__pycache__/
+fastapi-app/.venv/
+fastapi-app/*.pyc

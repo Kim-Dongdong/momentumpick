@@ -1,0 +1,14 @@
+# 도커 네트워크에서 FastAPI는 서비스명으로 접근
+app:
+  fastapi:
+    base-url: ${FASTAPI_BASE_URL:http://fastapi:8000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
