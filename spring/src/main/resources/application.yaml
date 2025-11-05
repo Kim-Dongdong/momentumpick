@@ -1,3 +1,13 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: momentumpick
+    name: stock-gateway
+  jackson:
+    time-zone: Asia/Seoul
+
+# 로컬 단독 실행 시 FastAPI 호스트/포트
+app:
+  fastapi:
+    base-url: http://localhost:8000

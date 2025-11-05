@@ -1,0 +1,32 @@
+services:
+  fastapi:
+    build: ./fastapi-app
+    container_name: fastapi
+    ports: ["8000:8000"]
+    environment: [TZ=Asia/Seoul]
+    healthcheck:
+      # curl 설치 없이도 동작하는 헬스체크
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  spring:
+    build:
+      context: ./spring
+      dockerfile: Dockerfile
+    container_name: spring
+    ports: ["8080:8080"]
+    environment:
+      - TZ=Asia/Seoul
+      - SPRING_PROFILES_ACTIVE=docker
+      - FASTAPI_BASE_URL=http://fastapi:8000
+    depends_on:
+      fastapi:
+        condition: service_healthy
+    healthcheck:
+      # Actuator 없이도 가능한 TCP 핑
+      test: ["CMD-SHELL", "echo > /dev/tcp/127.0.0.1/8080 || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
