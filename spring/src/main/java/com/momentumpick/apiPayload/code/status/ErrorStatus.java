@@ -28,6 +28,11 @@ public enum ErrorStatus implements BaseErrorCode {
 	// 테스트용 - flag가 2인경우 exception
 	TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트"),
 
+	DB_EXCEPTION(HttpStatus.BAD_REQUEST, "DB4001", "DB 저장 중 오류 발생"),
+
+	RETURN_ERROR(HttpStatus.BAD_REQUEST, "RT4001", "결과값 Return 중 오류 발생"),
+
+
 	;
 
 	private final HttpStatus httpStatus;

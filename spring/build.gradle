@@ -18,6 +18,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// Actuator(헬스체크 쓰면 권장)
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -30,6 +31,8 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'mysql:mysql-connector-java:8.0.28'
 }
 
 tasks.named('test') { useJUnitPlatform() }
