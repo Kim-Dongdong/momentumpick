@@ -1,3 +1,11 @@
-Flask
-pandas
-pykrx
+fastapi==0.115.0
+Flask==2.2.2
+pandas==2.2.2
+pykrx==1.0.46
+numpy==2.1.2
+pydantic==2.9.2
+requests==2.31.0
+uvicorn[standard]==0.30.6
+deprecated==1.2.14
+lxml==5.3.0
+python-dateutil==2.9.0
