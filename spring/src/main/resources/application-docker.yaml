@@ -1,7 +1,15 @@
-# 도커 네트워크에서 FastAPI는 서비스명으로 접근
-app:
-  fastapi:
-    base-url: ${FASTAPI_BASE_URL:http://fastapi:8000}
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql:3306/momentumpick}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:rootpassword}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 management:
   endpoints:

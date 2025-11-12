@@ -3,10 +3,10 @@ services:
     build: ./fastapi-app
     container_name: fastapi
     ports: ["8000:8000"]
-    environment: [TZ=Asia/Seoul]
+    environment:
+      - TZ=Asia/Seoul
     healthcheck:
-      # curl 설치 없이도 동작하는 헬스체크
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://fastapi:8000/healthz')"]
       interval: 5s
       timeout: 2s
       retries: 10
@@ -21,12 +21,43 @@ services:
       - TZ=Asia/Seoul
       - SPRING_PROFILES_ACTIVE=docker
       - FASTAPI_BASE_URL=http://fastapi:8000
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/momentumpick
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
     depends_on:
       fastapi:
         condition: service_healthy
+      mysql:
+        condition: service_healthy
     healthcheck:
-      # Actuator 없이도 가능한 TCP 핑
       test: ["CMD-SHELL", "echo > /dev/tcp/127.0.0.1/8080 || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 20
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: momentumpick
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - momentumpick_network
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "--silent" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+volumes:
+  mysql-data:
+
+networks:
+  momentumpick_network:
+    driver: bridge
